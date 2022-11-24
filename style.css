@@ -1,0 +1,32 @@
+    html,
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    line,
+    path {
+        stroke: black;
+    }
+
+    svg {
+        border: solid 1px black;
+    }
+
+    text,
+    polygon {
+        fill: black;
+    }
+
+    #svge {
+        position: fixed;
+        top: 700px;
+    }
+
+    #svg {
+        margin-top: 700px;
+    }
+    rect{
+        fill:lightblue;
+        
+    }
