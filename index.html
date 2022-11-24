@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG-slider-js</title>
+</head>
+
+<body>
+    <!-- <svg id="svge" height="1900" width="1000">
+
+        <line x1="550" y1="200" x2="450" y2="400"/>
+        <line x1="450" y1="400" x2="300" y2="400"/>
+        <line x1="450" y1="400" x2="550" y2="600"/>
+        <polygon points="550,605 550,595  700,585 700,615"/>
+        <line x1="550" y1="600" x2="450" y2="800"/>
+        <line x1="450" y1="800" x2="550" y2="1000"/>
+
+        <path d="M 520 200 Q 430 370 300 370" fill="transparent" />
+
+        <text x="150" y="455" fill="red" font-size="10em">O</text>
+        <text x="510" y="170" fill="red" font-size="10em">O</text>
+        <text x="700" y="650" fill="red" font-size="10em">NH</text>
+        <text x="940" y="690" fill="red" font-size="5em">3</text>
+        <text x="450" y="1130" fill="red" font-size="10em">OH</text>
+
+    </svg> -->
+    <svg id="svg" height="4000" width="7000">
+
+    </svg>
+    <script>
+        function generate(bialko, x, y, scale) {     //rysuje jedno aminokwas
+            var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            var svgNS = svg.namespaceURI;
+                                                                            //core
+            for (let i = 1; i <= bialko.h; i++) {
+                const line = document.createElementNS(svgNS, "line");    //generowanie pionowych lini w zetke
+                if (i % 2 == 0) {
+                    line.setAttribute("x1", (x + 450) * scale)
+                    line.setAttribute("x2", (x + 550) * scale)
+                } else {
+                    line.setAttribute("x1", (x + 550) * scale)
+                    line.setAttribute("x2", (x + 450) * scale)
+                }
+                line.setAttribute("y1", (200 * i + y) * scale)
+                line.setAttribute("y2", (200 * i + 200 + y) * scale)
+                document.getElementById("svg").appendChild(line);
+            }
+            const linehorizontal = document.createElementNS(svgNS, "line");     //horizonral line to O
+            linehorizontal.setAttribute("x1", (x + 450) * scale)
+            linehorizontal.setAttribute("y1", (y + 400) * scale)
+            linehorizontal.setAttribute("x2", (x + 300) * scale)
+            linehorizontal.setAttribute("y2", (y + 400) * scale)
+            document.getElementById("svg").appendChild(linehorizontal);
+
+
+            const linecurve = document.createElementNS(svgNS, "path");     //curve line to O
+            linecurve.setAttribute("d", "M " + parseFloat((520 + x) * scale) + " " + parseFloat((200 + y) * scale) + " " + "Q" + parseFloat((430 + x) * scale) + " " + parseFloat((370 + y) * scale) + " " + parseFloat((300 + x) * scale) + " " + parseFloat((370 + y)) * scale)
+            linecurve.setAttribute("fill", "transparent")
+            document.getElementById("svg").appendChild(linecurve);
+
+
+
+            const stO = document.createElementNS(svgNS, "text");
+            stO.setAttribute("x", (150 + x) * scale)
+            stO.setAttribute("y", (455 + y) * scale)
+            stO.setAttribute("font-size", scale * 10 + "em")
+            stO.innerHTML = "O"
+            document.getElementById("svg").appendChild(stO);
+
+            const ndO = document.createElementNS(svgNS, "text");
+            ndO.setAttribute("x", (510 + x) * scale)
+            ndO.setAttribute("y", (170 + y) * scale)
+            ndO.setAttribute("font-size", scale * 10 + "em")
+            ndO.innerHTML = "O"
+            document.getElementById("svg").appendChild(ndO);
+
+            const stNH = document.createElementNS(svgNS, "text");
+            stNH.setAttribute("x", (700 + x) * scale)
+            stNH.setAttribute("y", (650 + y) * scale)
+            stNH.setAttribute("font-size", scale * 10 + "em")
+            stNH.innerHTML = "NH"
+            document.getElementById("svg").appendChild(stNH);
+
+
+            const triangle = document.createElementNS(svgNS, "polygon");
+            triangle.setAttribute("points", parseFloat((x + 550) * scale) + "," + parseFloat((y + 605) * scale) + " " + parseFloat((x + 550) * scale) + "," + parseFloat((y + 595) * scale) + " " + parseFloat((x + 700) * scale) + "," + parseFloat((y + 585) * scale) + " " + parseFloat((x + 700) * scale) + "," + parseFloat((y + 615) * scale))
+            document.getElementById("svg").appendChild(triangle);
+
+
+            const stNHv = document.createElementNS(svgNS, "text");
+            stNHv.setAttribute("x", (940 + x) * scale)
+            stNHv.setAttribute("y", (690 + y) * scale)
+            stNHv.setAttribute("font-size", scale * 5 + "em")
+            stNHv.innerHTML = bialko.NH
+            document.getElementById("svg").appendChild(stNHv);
+                                                                                    //more than core
+
+
+            if (bialko.texts[0] !== undefined) {
+                for (let i = 0; i < bialko.texts.length; i++) {
+                    const text = document.createElementNS(svgNS, "text");
+
+
+                    if (bialko.textspos[i] == "DOWN") {
+                        if(bialko.h%2==0){
+                            text.setAttribute("x", (450 + x) * scale)
+                        }else{
+                            text.setAttribute("x", (350 + x) * scale)
+                        }
+                            text.setAttribute("y", (bialko.h * 200 + 340 + y) * scale)
+                    }
+
+
+
+
+                    text.setAttribute("font-size", scale * 10 + "em")
+                    text.innerHTML = bialko.texts[i]
+                    document.getElementById("svg").appendChild(text);
+                }
+
+
+
+
+
+
+            }
+
+
+
+
+        }
+
+
+
+
+
+
+        var core = {
+            name: core,
+            h: 4,                        //height-ilosc iponowych kresek
+            NH: "3",                     //NH value 2 or 3 
+            texts: [""],               //texts list
+            textspos: ["DOWN"],          //texts position
+
+        }
+        var serine = {
+            name: serine,
+            h: 4,                        //height-ilosc iponowych kresek
+            NH: "3",                     //NH value 2 or 3 
+            texts: ["OH"],               //texts list
+            textspos: ["DOWN"],          //texts position=
+        }
+        var seleconysteine = {
+            name: serine,
+            h: 4,                        //height-ilosc iponowych kresek
+            NH: "3",                     //NH value 2 or 3 
+            texts: ["SE"],               //texts list
+            textspos: ["DOWN"],          //texts position=
+        }
+        var cysteine = {
+            name: serine,
+            h: 4,                        //height-ilosc iponowych kresek
+            NH: "3",                     //NH value 2 or 3 
+            texts: ["SH"],               //texts list
+            textspos: ["DOWN"],          //texts position=
+        }
+        var glycine = {
+            name: glycine,
+            h: 2,                        //height-ilosc iponowych kresek
+            NH: "3",                     //NH value 2 or 3 
+            texts: [""],               //texts list
+            textspos: ["DOWN"],          //texts position
+        }
+
+        generate(core, 0, 0, 0.5)        // nazwa bialka,x,y,skala
+        generate(serine, 1000, 0, 1)        // nazwa bialka,x,y,skala
+        generate(seleconysteine, 2000, 0, 1)        // nazwa bialka,x,y,skala
+        generate(cysteine, 3000, 0, 1)        // nazwa bialka,x,y,skala
+        generate(glycine, 4000, 0, 1)        // nazwa bialka,x,y,skala
+    </script>
+    <style>
+        html,
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        line,
+        path {
+            stroke: black;
+            stroke-width: 10;
+        }
+
+        svg {
+            border: solid 1px black;
+
+        }
+
+        text,
+        polygon {
+            fill: black;
+        }
+
+        #svge {
+            position: fixed;
+            top: 700px;
+        }
+
+        #svg {
+            margin-top: 700px;
+        }
+    </style>
+
+</body>
+
+</html>
