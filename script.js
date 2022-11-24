@@ -18,17 +18,8 @@ function generate(bialko, x, y, scale) {     //rysuje jedno aminokwas
         document.getElementById("svg").appendChild(line);
     }
 
-    molecule("O", 150 + x, 455 + y, scale)
-    molecule("O", 510 + x, 170 + y, scale)
-    molecule("NH3", 700 + x, 650 + y, scale)
 
-    const linehorizontal = document.createElementNS(svgNS, "line");     //horizonral line to O
-    linehorizontal.setAttribute("x1", (x + 450) * scale)
-    linehorizontal.setAttribute("y1", (y + 400) * scale)
-    linehorizontal.setAttribute("x2", (x + 300) * scale)
-    linehorizontal.setAttribute("y2", (y + 400) * scale)
-    linehorizontal.setAttribute("stroke-width", 10 * scale)
-    document.getElementById("svg").appendChild(linehorizontal);
+    horizontalline("normal", x + 250, y + 400, scale)
 
 
     const linecurve = document.createElementNS(svgNS, "path");     //curve line to O
@@ -43,9 +34,18 @@ function generate(bialko, x, y, scale) {     //rysuje jedno aminokwas
     document.getElementById("svg").appendChild(triangle);
 
 
-                                                                    //---------more than core-------------//
+    //---------more than core-------------//
 
-
+    if (bialko.hasOwnProperty("horizontalline")) {
+        for (let i = 0; i < bialko.horizontalline.length; i++) {
+            if (bialko.horizontalline[i] % 2 == 0) {
+                horizontalline(bialko.linetype[i],  250+x, bialko.h * 200  + y, scale)
+            }
+            else {
+                horizontalline(bialko.linetype[i],  250+x, bialko.h * 200  + y, scale)
+            }
+        }
+    }
     if (bialko.hasOwnProperty("texts")) {                                                   //czasteczka na dole lancucha
         for (let i = 0; i < bialko.texts.length; i++) {
             if (bialko.textspos[i] == "DOWN") {
@@ -57,34 +57,60 @@ function generate(bialko, x, y, scale) {     //rysuje jedno aminokwas
             }
         }
     }
-    switch (bialko.name) {                                                                  //P wedle wlsnosci kazdego bialka opsobno
+    molecule("O", 150 + x, 455 + y, scale)
+    molecule("O", 510 + x, 170 + y, scale)
+    molecule("NH3", 700 + x, 650 + y, scale)
+    switch (bialko.name) {                                                                  // wedle wlsnosci kazdego bialka opsobno
         case "arginine":
             break;
 
         default:
     }
 }
+function horizontalline(linetype, x, y, scale) {               //typ lini,x1,x2,
+    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    var svgNS = svg.namespaceURI;
+    if (linetype == "normal") {
+
+        const linehorizontal = document.createElementNS(svgNS, "line");     //horizonral line to O
+        linehorizontal.setAttribute("x1", (x) * scale)
+        linehorizontal.setAttribute("y1", (y) * scale)
+        linehorizontal.setAttribute("x2", (x + 200) * scale)
+        linehorizontal.setAttribute("y2", (y) * scale)
+        linehorizontal.setAttribute("stroke-width", 10 * scale)
+        document.getElementById("svg").appendChild(linehorizontal);
+    }
+    else if (linetype == "double") {
+        horizontalline("normal",  x, y+10, scale)
+        horizontalline("normal",  x, y-10, scale)
+
+    }
+}
 function molecule(molecule, x, y, scale) {          //nazwa molekuły,kordynaty,skala   np   ("G", 100, 700, 1)              rysuje czasteczki   
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     var svgNS = svg.namespaceURI;
     var valuespace = 0;
+    var bigchar = 0;
+    var smallchar = 0;
     for (let i = 0; i < molecule.length; i++) {
         if (molecule.charAt(i) >= 0) {
             var numbervalue = molecule.charAt(i);
             valuespace = i;
+            smallchar++;
             molecule = molecule.replace(numbervalue, " ")
         }
+        else {
+            bigchar++;
+        }
     }
-    console.log(numbervalue)
-    console.log(molecule)
 
     const rectbg = document.createElementNS(svgNS, "rect");
-    rectbg.setAttribute("x", (x-20) * scale)
-    rectbg.setAttribute("y", (y-120) * scale)
+    rectbg.setAttribute("x", (x - 20) * scale)
+    rectbg.setAttribute("y", (y - 140) * scale)
     rectbg.setAttribute("rx", 20 * scale)
     rectbg.setAttribute("ry", 20 * scale)
-    rectbg.setAttribute("width", (80+molecule.length*70) * scale)
-    rectbg.setAttribute("height", (150) * scale)
+    rectbg.setAttribute("width", (40 + bigchar * 120 + smallchar * 20) * scale)
+    rectbg.setAttribute("height", (180) * scale)
     document.getElementById("svg").appendChild(rectbg);
 
 
@@ -148,28 +174,27 @@ var lysine = {
     NH: "3",                     //NH value 2 or 3 
     texts: ["H3N"],              //texts list
     textspos: ["DOWN"],          //texts position
-    texthelper: ["3"],          //texts position
 }
 var valine = {
     name: "valine",
     h: 4,                        //height-ilosc iponowych kresek
     NH: "3",                     //NH value 2 or 3 
-    texthelper: ["3"],          //texts position
 }
 var glutamine = {
     name: "glutamine",
-    h: 8,
+    h: 6,
     NH: "3",                 //NH value 2 or 3 
-    texts: ["NH"],              //texts list
+    texts: ["NH2"],              //texts list
     textspos: ["DOWN"],          //texts position
-    texthelper: ["2"],          //texts position
+    horizontalline: [5],
+    linetype: ["double"]        //triangle straingt double
 }
-generate(core, 0, 0, 0.45)        // nazwa bialka,x,y,skala
+
+generate(core, 0, 0, 1)        // nazwa bialka,x,y,skala
 generate(serine, 1000, 0, 1)        // nazwa bialka,x,y,skala
 generate(seleconysteine, 2000, 0, 1)        // nazwa bialka,x,y,skala
 generate(cysteine, 3000, 0, 1)        // nazwa bialka,x,y,skala
 generate(glycine, 4000, 0, 1)        // nazwa bialka,x,y,skala
 generate(alanine, 5000, 0, 1)        // nazwa bialka,x,y,skala
 generate(lysine, 6000, 0, 1)        // nazwa bialka,x,y,skala
-generate(glutamine, 0, 1500, 1)        // nazwa bialka,x,y,skala
-//molecule("G", 100, 700, 1)
+generate(glutamine, 0, 1800, 1)        // nazwa bialka,x,y,skala
