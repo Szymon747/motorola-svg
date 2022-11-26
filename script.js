@@ -19,13 +19,13 @@ function generate(bialko, x, y, scale) {     //rysuje jedno aminokwas
     }
 
 
-    const linecurve = document.createElementNS(svgNS, "path");                                             //path krzywa 
+    var linecurve = document.createElementNS(svgNS, "path");                                             //path krzywa 
     linecurve.setAttribute("d", "M " +
         parseFloat((520 + x) * scale) + " " +
         parseFloat((200 + y) * scale) + " " + "Q" +
         parseFloat((430 + x) * scale) + " " +
         parseFloat((370 + y) * scale) + " " +
-        parseFloat((280 + x) * scale) + " " +
+        parseFloat((250 + x) * scale) + " " +
         parseFloat((370 + y)) * scale)
     linecurve.setAttribute("fill", "transparent")
     linecurve.setAttribute("stroke-width", 10 * scale)
@@ -52,25 +52,28 @@ function generate(bialko, x, y, scale) {     //rysuje jedno aminokwas
         // texts: ["H2N","O"],              //texts list
         // textspos: ["DOWN",5]           //texts position
         for (let i = 0; i < bialko.texts.length; i++) {
+            let adder = false;
+            if (bialko.texts[i].length == 1) {
+                adder = true;
+            }
             if (bialko.textspos[i] == "DOWN") {
                 if (bialko.h % 2 == 0) {
-                    molecule(bialko.texts[i], (450 + x), (bialko.h * 200 + 340 + y), scale)
+                    molecule(bialko.texts[i], (600 + x - adder * 80), (bialko.h * 200 + 340 + y), scale)
                 } else {
-                    molecule(bialko.texts[i], (350 + x), (bialko.h * 200 + 340 + y), scale)
+                    molecule(bialko.texts[i], (500 + x - adder * 80), (bialko.h * 200 + 340 + y), scale)
                 }
             }
             else {
                 if (bialko.textspos[i] % 2 == 0) {
                     molecule(bialko.texts[i], (150 + x), (bialko.textspos[i] * 200 + 50 + y), scale)
                 } else {
-                    molecule(bialko.texts[i], (750 + x), (bialko.textspos[i] * 200 + 50 + y), scale)
+                    molecule(bialko.texts[i], (950 + x - adder * 140), (bialko.textspos[i] * 200 + 50 + y), scale)
                 }
             }
         }
     }
     molecule("O", 510 + x, 170 + y, scale)
-    molecule(bialko.name, x + 400, y + 600 + bialko.h * 200, scale)
-
+    //molecule(bialko.name, x + 400, y + 600 + bialko.h * 200, scale)
 
 
 
@@ -78,7 +81,47 @@ function generate(bialko, x, y, scale) {     //rysuje jedno aminokwas
 
     switch (bialko.name) {                                                                  // wedle wlsnosci kazdego bialka opsobno
         case "arginine":
-            //molecule("");
+            linecurve = document.createElementNS(svgNS, "path");                                             //path krzywa 
+            linecurve.setAttribute("d", "M " +
+                parseFloat((520 + x) * scale) + " " +
+                parseFloat((1800 + y) * scale) + " " + "Q" +
+                parseFloat((430 + x) * scale) + " " +
+                parseFloat((1630 + y) * scale) + " " +
+                parseFloat((250 + x) * scale) + " " +
+                parseFloat((1630 + y)) * scale)
+            linecurve.setAttribute("fill", "transparent")
+            linecurve.setAttribute("stroke-width", 10 * scale)
+            document.getElementById("svg").appendChild(linecurve);
+            molecule("NH", x + 600, y + 1450, scale)
+            break;
+        case "glutamic":
+            linecurve = document.createElementNS(svgNS, "path");                                             //path krzywa 
+            linecurve.setAttribute("d", "M " +
+                parseFloat((520 + x) * scale) + " " +
+                parseFloat((1400 + y) * scale) + " " + "Q" +
+                parseFloat((430 + x) * scale) + " " +
+                parseFloat((1230 + y) * scale) + " " +
+                parseFloat((250 + x) * scale) + " " +
+                parseFloat((1230 + y)) * scale)
+            linecurve.setAttribute("fill", "transparent")
+            linecurve.setAttribute("stroke-width", 10 * scale)
+            document.getElementById("svg").appendChild(linecurve);
+            break;
+        case "methionine":
+            molecule("S", x + 450, y + 1250, scale)
+            break;
+        case "aspartic":
+            linecurve = document.createElementNS(svgNS, "path");                                             //path krzywa 
+            linecurve.setAttribute("d", "M " +
+                parseFloat((750 + x) * scale) + " " +
+                parseFloat((1040 + y) * scale) + " " + "Q" +
+                parseFloat((550 + x) * scale) + " " +
+                parseFloat((1040 + y) * scale) + " " +
+                parseFloat((480 + x) * scale) + " " +
+                parseFloat((1200 + y)) * scale)
+            linecurve.setAttribute("fill", "transparent")
+            linecurve.setAttribute("stroke-width", 10 * scale)
+            document.getElementById("svg").appendChild(linecurve);
             break;
 
         default:
@@ -89,7 +132,7 @@ function horizontalline(linetype, x, y, scale) {               //typ lini,x1,x2,
     var svgNS = svg.namespaceURI;
     if (linetype == "normal") {                                                      //pozioma pojedyncza linia
 
-        const linehorizontal = document.createElementNS(svgNS, "line");                   
+        const linehorizontal = document.createElementNS(svgNS, "line");
         linehorizontal.setAttribute("x1", (x) * scale)
         linehorizontal.setAttribute("y1", (y) * scale)
         linehorizontal.setAttribute("x2", (x + 200) * scale)
@@ -103,19 +146,17 @@ function horizontalline(linetype, x, y, scale) {               //typ lini,x1,x2,
 
     }
     else if (linetype == "triangle-left") {                                                      //pozioma plinia w kształnie trójkata po lewej stronie czastki
-        console.log("triangle")
         const triangle = document.createElementNS(svgNS, "polygon");
         triangle.setAttribute("points",
-            parseFloat((x) * scale) + "," + parseFloat((y + 10) * scale) + " " +
-            parseFloat((x) * scale) + "," + parseFloat((y) * scale) + " " +
-            parseFloat((x + 200) * scale) + "," + parseFloat((y - 25) * scale) + " " +
-            parseFloat((x + 200) * scale) + "," + parseFloat((y + 25) * scale)
+            parseFloat((x + 200) * scale) + "," + parseFloat((y + 10) * scale) + " " +
+            parseFloat((x + 200) * scale) + "," + parseFloat((y) * scale) + " " +
+            parseFloat((x) * scale) + "," + parseFloat((y - 25) * scale) + " " +
+            parseFloat((x) * scale) + "," + parseFloat((y + 25) * scale)
 
         )
         document.getElementById("svg").appendChild(triangle);
     }
     else if (linetype == "triangle-right") {                                                      //pozioma plinia w kształnie trójkata po prawej stronie czastki
-        console.log("triangle")
         const triangle = document.createElementNS(svgNS, "polygon");
         triangle.setAttribute("points",
             parseFloat((x) * scale) + "," + parseFloat((y + 10) * scale) + " " +
@@ -146,7 +187,7 @@ function molecule(molecule, x, y, scale) {                                      
     }
 
     const rectbg = document.createElementNS(svgNS, "rect");                                             //generowanie tła
-    rectbg.setAttribute("x", ((x - 20)-(40 + bigchar * 120 + smallchar * 20)) * scale)
+    rectbg.setAttribute("x", (x - (bigchar * 120 + smallchar * 20 - 60)) * scale)
     rectbg.setAttribute("y", (y - 140) * scale)
     rectbg.setAttribute("rx", 20 * scale)
     rectbg.setAttribute("ry", 20 * scale)
@@ -156,14 +197,14 @@ function molecule(molecule, x, y, scale) {                                      
 
 
     const moleculetext = document.createElementNS(svgNS, "text");                                             //wypisanie tekstu duzych liter
-    moleculetext.setAttribute("x", x * scale)
+    moleculetext.setAttribute("x", (x - (bigchar * 120 + smallchar * 20 - 80)) * scale)
     moleculetext.setAttribute("y", y * scale)
     moleculetext.setAttribute("font-size", scale * 10 + "em")
     moleculetext.innerHTML = molecule
     document.getElementById("svg").appendChild(moleculetext);
     if (valuespace) {
-        const moleculenumber = document.createElementNS(svgNS, "text");                                             //wypisanie tektstu male znaki
-        moleculenumber.setAttribute("x", (x + 120 + (valuespace - 1) * 100) * scale)
+        const moleculenumber = document.createElementNS(svgNS, "text");                                             //wypisanie tektstu male znaki na miejsce spacji
+        moleculenumber.setAttribute("x", (x - 60 + (valuespace - 1) * 100) * scale)
         moleculenumber.setAttribute("y", (y + 30) * scale)
         moleculenumber.setAttribute("font-size", scale * 5 + "em")
         moleculenumber.innerHTML = numbervalue
@@ -172,8 +213,11 @@ function molecule(molecule, x, y, scale) {                                      
 
 }
 
-                                                                                                                                //dane aminokwasów
-const core = { 
+//----dane aminokwasów---
+
+
+
+const core = {                                                                      //główny rdzen powtarzalny dla wszytski aminokwasów
     name: "core",
     h: 4,
     NH: "3",
@@ -182,7 +226,7 @@ const core = {
     texts: ["O", "NO3",],
     textspos: [2, 3,]
 }
-const core2 = {
+const core2 = {                                                                     //do testów
     name: "core2",
     h: 4,
     NH: "3",
@@ -249,8 +293,6 @@ const valine = {
     name: "valine",
     h: 4,
     NH: "3",
-    horizontalline: [4],
-    linetype: [2, 3, "normal"],
     texts: ["O", "NO3",],
     textspos: [2, 3],
     horizontalline: [2, 3],
@@ -262,8 +304,6 @@ const glutamine = {
     NH: "3",
     texts: ["O", "NO3", "NH2", "O"],
     textspos: [2, 3, "DOWN", 6],
-    horizontalline: [6],
-    linetype: ["double"],
     horizontalline: [2, 3, 6],
     linetype: ["normal", "triangle-right", "normal"],
 }
@@ -271,8 +311,6 @@ const leucine = {
     name: "leucine",
     h: 5,
     NH: "3",
-    horizontalline: [5],
-    linetype: ["normal"],
     texts: ["O", "NO3",],
     textspos: [2, 3,],
     horizontalline: [2, 3],
@@ -282,8 +320,6 @@ const asparagine = {
     name: "asparagine",
     h: 5,
     NH: "3",
-    horizontalline: [5],
-    linetype: ["double"],
     texts: ["O", "NO3", "H2N", "O"],
     textspos: [2, 3, "DOWN", 5],
     horizontalline: [2, 3, 5],
@@ -293,8 +329,6 @@ const threonine = {
     name: "threonine",
     h: 4,
     NH: "3",
-    horizontalline: [4],
-    linetype: ["triangle-left"],
     texts: ["O", "NO3", "OH"],
     textspos: [2, 3, 4],
     horizontalline: [2, 3, 4],
@@ -304,12 +338,46 @@ const arginine = {
     name: "arginine",
     h: 8,
     NH: "3",
-    horizontalline: [4],
-    linetype: ["triangle-left"],
-    texts: ["O", "NH3", "NH2","NH2"],
+    texts: ["O", "NH3", "NH2", "NH2"],
     textspos: [2, 3, 8, "DOWN"],
     horizontalline: [2, 3, 8],
     linetype: ["normal", "triangle-right", "normal", "normal"],
+}
+const glutamic = {
+    name: "glutamic",
+    h: 6,
+    NH: "3",
+    horizontalline: [2, 3, 6],
+    linetype: ["normal", "triangle-right", "normal", "normal"],
+    texts: ["O", "NH3", "O", "O"],
+    textspos: [2, 3, 6, "DOWN"],
+}
+const isoleucine = {
+    name: "isoleucine",
+    h: 5,
+    NH: "3",
+    horizontalline: [2, 3, 4],
+    linetype: ["normal", "triangle-right", "triangle-left"],
+    texts: ["O", "NH3"],
+    textspos: [2, 3],
+}
+const nethionine = {
+    name: "methionine",
+    h: 6,
+    NH: "3",
+    horizontalline: [2, 3],
+    linetype: ["normal", "triangle-right"],
+    texts: ["O", "NH3"],
+    textspos: [2, 3],
+}
+const aspartic = {
+    name: "aspartic",
+    h: 5,
+    NH: "3",
+    horizontalline: [2, 3, 5],
+    linetype: ["normal", "triangle-right", "normal"],
+    texts: ["O", "NH3", "O", "O"],
+    textspos: [2, 3, 5, "DOWN"],
 }
 
 generate(core, 500, 0, 1)        // nazwa bialka,x,y,skala
@@ -319,13 +387,15 @@ generate(cysteine, 3500, 0, 1)        // nazwa bialka,x,y,skala
 generate(glycine, 4500, 0, 1)        // nazwa bialka,x,y,skala
 generate(alanine, 5500, 0, 1)        // nazwa bialka,x,y,skala
 generate(lysine, 6500, 0, 1)        // nazwa bialka,x,y,skala
-generate(valine, 500, 1800, 1)        // nazwa bialka,x,y,skala
-generate(glutamine, 1500, 1800, 1)        // nazwa bialka,x,y,skala
-generate(leucine, 2500, 1800, 1)        // nazwa bialka,x,y,skala
-generate(asparagine, 3500, 1800, 1)        // nazwa bialka,x,y,skala
-generate(threonine, 4500, 1800, 1)        // nazwa bialka,x,y,skala
-generate(core, 3500, 3600, 1)        // nazwa bialka,x,y,skala
-generate(core2, 4500, 3600, 1)        // nazwa bialka,x,y,skala
+generate(valine, 500, 2000, 1)        // nazwa bialka,x,y,skala
+generate(glutamine, 1500, 2000, 1)        // nazwa bialka,x,y,skala
+generate(leucine, 2500, 2000, 1)        // nazwa bialka,x,y,skala
+generate(asparagine, 3500, 2000, 1)        // nazwa bialka,x,y,skala
+generate(threonine, 4500, 2000, 1)        // nazwa bialka,x,y,skala
 
 
-generate(arginine, 500, 200, 0.5)
+generate(arginine, 500, 4000, 1)
+generate(glutamic, 1500, 4000, 1)
+generate(isoleucine, 2500, 4000, 1)
+generate(nethionine, 3500, 4000, 1)
+generate(aspartic, 4500, 4000, 1)
