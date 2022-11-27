@@ -216,7 +216,7 @@ function personalized(bialko, x, y, scale) {
 
             linedraw(x,y,120,30,280,30);
             linedraw(x,y,120,320,30,173);
-            linedraw(x,y,284,158,370,173);
+            linedraw(x,y,284,320,370,173);
 
             break;
         case "tyrosine":
