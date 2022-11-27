@@ -1,7 +1,7 @@
 
+const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+const svgNS = svg.namespaceURI;
 function generate(bialko, x, y, scale) {     //rysuje jedno aminokwas
-    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    var svgNS = svg.namespaceURI;
     //core
     for (let i = 1; i <= bialko.h; i++) {                                                               //generowanie pionowych lini w zetke
         const line = document.createElementNS(svgNS, "line");
@@ -79,12 +79,69 @@ function generate(bialko, x, y, scale) {     //rysuje jedno aminokwas
     personalized(bialko, x, y, scale);
 }
 function personalized(bialko, x, y, scale) {
+    function polygonf(type, x, y, scale,) {
+        console.log("wielokot", type)
+        polygon = document.createElementNS(svgNS, "polygon")
+        if (type == "5") {
 
-    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    var svgNS = svg.namespaceURI;
+            polygon.setAttribute("points",
 
-    var polygon = document.createElementNS(svgNS, "polygon")
-    var line = document.createElementNS(svgNS, "line");
+                parseFloat((300 + x + xslide) * scale) + "," +
+                parseFloat((200 + y + yslide) * scale) + " " +
+
+                parseFloat((150 + x + xslide) * scale) + "," +
+                parseFloat((314 + y + yslide) * scale) + " " +
+
+                parseFloat((x + xslide) * scale) + "," +
+                parseFloat((200 + y + yslide) * scale) + " " +
+
+                parseFloat((50 + x + xslide) * scale) + "," +   //lewy gorny rog
+                parseFloat((y + yslide) * scale) + " " +
+
+                parseFloat((250 + x + xslide) * scale) + "," +
+                parseFloat((y + yslide) * scale))
+        }
+        if (type == "6") {
+
+            polygon.setAttribute("points",
+
+                parseFloat((x + xslide) * scale) + "," +            //lewy skrajny
+                parseFloat((173 + y + yslide) * scale) + " " +
+
+                parseFloat((100 + x + xslide) * scale) + "," +
+                parseFloat((y + yslide) * scale) + " " +
+
+                parseFloat((300 + x + xslide) * scale) + "," +
+                parseFloat((y + yslide) * scale) + " " +
+
+                parseFloat((400 + x + xslide) * scale) + "," +
+                parseFloat((173 + y + yslide) * scale) + " " +
+
+                parseFloat((300 + x + xslide) * scale) + "," +
+                parseFloat((173 * 2 + y + yslide) * scale) + " " +
+
+                parseFloat((100 + x + xslide) * scale) + "," +
+                parseFloat((173 * 2 + y + yslide) * scale) + " " +
+
+                parseFloat((x + xslide) * scale) + "," +
+                parseFloat((173 + y + yslide) * scale))
+        }
+
+
+        polygon.setAttribute("stroke-width", 10 * scale)
+        polygon.setAttribute("stroke", "black")
+        polygon.setAttribute("fill", "white")
+        document.getElementById("svg").appendChild(polygon);
+    }
+    function linedraw(x,y,x1,y1,x2,y2){
+        line = document.createElementNS(svgNS, "line");
+        line.setAttribute("x1", (x + x1 + xslide) * scale)
+        line.setAttribute("y1", (y + y1 + yslide) * scale)
+        line.setAttribute("x2", (x + x2 + xslide) * scale)
+        line.setAttribute("y2", (y + y2 + yslide) * scale)
+        line.setAttribute("stroke-width", 10 * scale)
+        document.getElementById("svg").appendChild(line);
+    }
     var xslide = 0;
     var yslide = 0;
     switch (bialko.name) {                                                                  // wedle wlsnosci kazdego bialka opsobno
@@ -132,49 +189,12 @@ function personalized(bialko, x, y, scale) {
             document.getElementById("svg").appendChild(linecurve);
             break;
         case "histidine":
-            polygon = document.createElementNS(svgNS, "polygon")
             xslide = 500;
             yslide = 1000;
-            polygon.setAttribute("points",
+            polygonf("5", x, y, scale)
 
-                parseFloat((300 + x + xslide) * scale) + "," +
-                parseFloat((200 + y + yslide) * scale) + " " +
-
-                parseFloat((150 + x + xslide) * scale) + "," +
-                parseFloat((314 + y + yslide) * scale) + " " +
-
-                parseFloat((x + xslide) * scale) + "," +
-                parseFloat((200 + y + yslide) * scale) + " " +
-
-                parseFloat((50 + x + xslide) * scale) + "," +   //lewy gorny rog
-                parseFloat((y) * scale + yslide) + " " +
-
-                parseFloat((250 + x + xslide) * scale) + "," +
-                parseFloat((y) * scale + yslide))
-
-
-            polygon.setAttribute("stroke-width", 10 * scale)
-            polygon.setAttribute("stroke", "black")
-            polygon.setAttribute("fill", "white")
-            document.getElementById("svg").appendChild(polygon);
-
-
-
-            line = document.createElementNS(svgNS, "line");
-            line.setAttribute("x1", (x + 70 + xslide) * scale)
-            line.setAttribute("y1", (y + 25 + yslide) * scale)
-            line.setAttribute("x2", (x + 230 + xslide) * scale)
-            line.setAttribute("y2", (y + 25 + yslide) * scale)
-            line.setAttribute("stroke-width", 10 * scale)
-            document.getElementById("svg").appendChild(line);
-
-            line = document.createElementNS(svgNS, "line");
-            line.setAttribute("x1", (x + 150 + xslide) * scale)
-            line.setAttribute("y1", (y + 284 + yslide) * scale)
-            line.setAttribute("x2", (x + 25 + xslide) * scale)
-            line.setAttribute("y2", (y + 190 + yslide) * scale)
-            line.setAttribute("stroke-width", 10 * scale)
-            document.getElementById("svg").appendChild(line);
+            linedraw(x,y,70,25,230,25)
+            linedraw(x,y,150,284,25,190)
 
             molecule("N", (500 + x), (1250 + y), scale)
             molecule("NH", (900 + x), (1250 + y), scale)
@@ -182,32 +202,9 @@ function personalized(bialko, x, y, scale) {
             break;
 
         case "proline":
-            polygon = document.createElementNS(svgNS, "polygon")
             xslide = 500;
             yslide = 600;
-            polygon.setAttribute("points",
-
-                parseFloat((300 + x + xslide) * scale) + "," +
-                parseFloat((200 + y + yslide) * scale) + " " +
-
-                parseFloat((150 + x + xslide) * scale) + "," +
-                parseFloat((314 + y + yslide) * scale) + " " +
-
-                parseFloat((x + xslide) * scale) + "," +
-                parseFloat((200 + y + yslide) * scale) + " " +
-
-                parseFloat((50 + x + xslide) * scale) + "," +   //lewy gorny rog
-                parseFloat((y) * scale + yslide) + " " +
-
-                parseFloat((250 + x + xslide) * scale) + "," +
-                parseFloat((y) * scale + yslide))
-
-
-            polygon.setAttribute("stroke-width", 10 * scale)
-            polygon.setAttribute("stroke", "black")
-            polygon.setAttribute("fill", "white")
-            document.getElementById("svg").appendChild(polygon);
-
+            polygonf("5", x, y, scale)
             horizontalline("triangle-right", 550 + x, 600 + y, scale)
 
             break;
@@ -215,132 +212,52 @@ function personalized(bialko, x, y, scale) {
             polygon = document.createElementNS(svgNS, "polygon")
             xslide = 450;
             yslide = 1000;
-            polygon.setAttribute("points",
+            polygonf("6", x, y, scale)
 
-                parseFloat((x + xslide) * scale) + "," +            //lewy skrajny
-                parseFloat((173 + y + yslide) * scale) + " " +
-
-                parseFloat((100 + x + xslide) * scale) + "," +
-                parseFloat((y + yslide) * scale) + " " +
-
-                parseFloat((300 + x + xslide) * scale) + "," +
-                parseFloat((y + yslide) * scale) + " " +
-
-                parseFloat((400 + x + xslide) * scale) + "," +
-                parseFloat((173 + y + yslide) * scale) + " " +
-
-                parseFloat((300 + x + xslide) * scale) + "," +
-                parseFloat((173 * 2 + y + yslide) * scale) + " " +
-
-                parseFloat((100 + x + xslide) * scale) + "," +
-                parseFloat((173 * 2 + y + yslide) * scale) + " " +
-
-                parseFloat((x + xslide) * scale) + "," +
-                parseFloat((173 + y + yslide) * scale))
-
-
-            polygon.setAttribute("stroke-width", 10 * scale)
-            polygon.setAttribute("stroke", "black")
-            polygon.setAttribute("fill", "white")
-            document.getElementById("svg").appendChild(polygon);
-
-            line = document.createElementNS(svgNS, "line");
-            line.setAttribute("x1", (x + 120 + xslide) * scale)
-            line.setAttribute("y1", (y + 30 + yslide) * scale)
-            line.setAttribute("x2", (x + 280 + xslide) * scale)
-            line.setAttribute("y2", (y + 30 + yslide) * scale)
-            line.setAttribute("stroke-width", 10 * scale)
-            document.getElementById("svg").appendChild(line);
-
-            line = document.createElementNS(svgNS, "line");
-            line.setAttribute("x1", (x + 120 + xslide) * scale)
-            line.setAttribute("y1", (y + 320 + yslide) * scale)
-            line.setAttribute("x2", (x + 30 + xslide) * scale)
-            line.setAttribute("y2", (y + 173 + yslide) * scale)
-            line.setAttribute("stroke-width", 10 * scale)
-            document.getElementById("svg").appendChild(line);
-
-            line = document.createElementNS(svgNS, "line");
-            line.setAttribute("x1", (x + 284 + xslide) * scale)
-            line.setAttribute("y1", (y + 158 * 2 + yslide) * scale)
-            line.setAttribute("x2", (x + 370 + xslide) * scale)
-            line.setAttribute("y2", (y + 173 + yslide) * scale)
-            line.setAttribute("stroke-width", 10 * scale)
-            document.getElementById("svg").appendChild(line);
+            linedraw(x,y,120,30,280,30);
+            linedraw(x,y,120,320,30,173);
+            linedraw(x,y,284,158,370,173);
 
             break;
         case "tyrosine":
             polygon = document.createElementNS(svgNS, "polygon")
             xslide = 450;
             yslide = 1000;
-            polygon.setAttribute("points",
 
-                parseFloat((x + xslide) * scale) + "," +            //lewy skrajny
-                parseFloat((173 + y + yslide) * scale) + " " +
+            polygonf("6", x, y, scale)
 
-                parseFloat((100 + x + xslide) * scale) + "," +
-                parseFloat((y + yslide) * scale) + " " +
-
-                parseFloat((300 + x + xslide) * scale) + "," +
-                parseFloat((y + yslide) * scale) + " " +
-
-                parseFloat((400 + x + xslide) * scale) + "," +
-                parseFloat((173 + y + yslide) * scale) + " " +
-
-                parseFloat((300 + x + xslide) * scale) + "," +
-                parseFloat((173 * 2 + y + yslide) * scale) + " " +
-
-                parseFloat((100 + x + xslide) * scale) + "," +
-                parseFloat((173 * 2 + y + yslide) * scale) + " " +
-
-                parseFloat((x + xslide) * scale) + "," +
-                parseFloat((173 + y + yslide) * scale))
+            linedraw(x,y,120,30,280,30);
+            linedraw(x,y,120,320,30,173);
+            linedraw(x,y,284,320,370,173);
+            linedraw(x,y,300,350,400,550);
 
 
-            polygon.setAttribute("stroke-width", 10 * scale)
-            polygon.setAttribute("stroke", "black")
-            polygon.setAttribute("fill", "white")
-            document.getElementById("svg").appendChild(polygon);
 
-            line = document.createElementNS(svgNS, "line");
-            line.setAttribute("x1", (x + 120 + xslide) * scale)
-            line.setAttribute("y1", (y + 30 + yslide) * scale)
-            line.setAttribute("x2", (x + 280 + xslide) * scale)
-            line.setAttribute("y2", (y + 30 + yslide) * scale)
-            line.setAttribute("stroke-width", 10 * scale)
-            document.getElementById("svg").appendChild(line);
+            molecule("OH", x + 900, y + 1650, scale)
+            break;
+        case "tryptophan":
+            polygon = document.createElementNS(svgNS, "polygon")
+            xslide = 500;
+            yslide = 1000;
 
-            line = document.createElementNS(svgNS, "line");
-            line.setAttribute("x1", (x + 120 + xslide) * scale)
-            line.setAttribute("y1", (y + 320 + yslide) * scale)
-            line.setAttribute("x2", (x + 30 + xslide) * scale)
-            line.setAttribute("y2", (y + 173 + yslide) * scale)
-            line.setAttribute("stroke-width", 10 * scale)
-            document.getElementById("svg").appendChild(line);
+            polygonf("5", x, y, scale)
+            xslide = 200;
+            yslide = 1200;
+            polygonf("6", x, y, scale)
 
-            line = document.createElementNS(svgNS, "line");
-            line.setAttribute("x1", (x + 284 + xslide) * scale)
-            line.setAttribute("y1", (y + 158 * 2 + yslide) * scale)
-            line.setAttribute("x2", (x + 370 + xslide) * scale)
-            line.setAttribute("y2", (y + 173 + yslide) * scale)
-            line.setAttribute("stroke-width", 10 * scale)
-            document.getElementById("svg").appendChild(line);
+            linedraw(x,y,120,30,280,30);
+            linedraw(x,y,120,320,30,173);
+            linedraw(x,y,284,316,370,173);
+
+            molecule("NH", x + 900, y + 1250, scale)
 
 
-            line = document.createElementNS(svgNS, "line");
-            line.setAttribute("x1", (x + 300 + xslide) * scale)
-            line.setAttribute("y1", (y + 350 + yslide) * scale)
-            line.setAttribute("x2", (x + 400 + xslide) * scale)
-            line.setAttribute("y2", (y + 550 + yslide) * scale)
-            line.setAttribute("stroke-width", 10 * scale)
-            document.getElementById("svg").appendChild(line);
             break;
         default:
     }
 }
 function horizontalline(linetype, x, y, scale) {               //typ lini,x1,x2,
-    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    var svgNS = svg.namespaceURI;
+
     if (linetype == "normal") {                                                      //pozioma pojedyncza linia
 
         const linehorizontal = document.createElementNS(svgNS, "line");
@@ -380,8 +297,6 @@ function horizontalline(linetype, x, y, scale) {               //typ lini,x1,x2,
     }
 }
 function molecule(molecule, x, y, scale) {                                                           //nazwa molekuły,kordynaty,skala   np   ("G", 100, 700, 1)              rysuje czasteczki   
-    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    var svgNS = svg.namespaceURI;
     var valuespace = 0;
     var bigchar = 0;
     var smallchar = 0;
@@ -604,25 +519,34 @@ const tyrosine = {
     texts: ["O", "NH3"],
     textspos: [2, 3],
 }
-
-// generate(core, 500, 0, 1)        // nazwa bialka,x,y,skala
-// generate(serine, 1500, 0, 1)        // nazwa bialka,x,y,skala
-// generate(seleconysteine, 2500, 0, 1)        // nazwa bialka,x,y,skala
-// generate(cysteine, 3500, 0, 1)        // nazwa bialka,x,y,skala
-// generate(glycine, 4500, 0, 1)        // nazwa bialka,x,y,skala
-// generate(alanine, 5500, 0, 1)        // nazwa bialka,x,y,skala
-// generate(lysine, 6500, 0, 1)        // nazwa bialka,x,y,skala
-// generate(valine, 500, 2000, 1)        // nazwa bialka,x,y,skala
-// generate(glutamine, 1500, 2000, 1)        // nazwa bialka,x,y,skala
-// generate(leucine, 2500, 2000, 1)        // nazwa bialka,x,y,skala
-// generate(asparagine, 3500, 2000, 1)        // nazwa bialka,x,y,skala
-// generate(threonine, 4500, 2000, 1)        // nazwa bialka,x,y,skala
-// generate(arginine, 5500, 2000, 1)
-// generate(glutamic, 6500, 2000, 1)
-// generate(isoleucine, 500, 4000, 1)
-// generate(nethionine, 1500, 4000, 1)
-// generate(aspartic, 2500, 4000, 1)
-// generate(histidine, 3500, 4000, 1)
-// generate(proline, 4500, 4000, 1)
-// generate(phenylanine, 5500, 4000, 1)
-generate(tyrosine, 00, 000, 1)
+const tryptophan = {
+    name: "tryptophan",
+    h: 4,
+    horizontalline: [2, 3],
+    linetype: ["normal", "triangle-right"],
+    texts: ["O", "NH3"],
+    textspos: [2, 3],
+}
+skala = 0.2
+generate(core, 500, 0, skala)        // nazwa bialka,x,y,skala
+generate(serine, 1500, 0, skala)        
+generate(seleconysteine, 2500, 0, skala)        
+generate(cysteine, 3500, 0, skala)       
+generate(glycine, 4500, 0, skala)       
+generate(alanine, 5500, 0, skala)       
+generate(lysine, 6500, 0, skala)       
+generate(valine, 500, 2000, skala)     
+generate(glutamine, 1500, 2000, skala)        
+generate(leucine, 2500, 2000, skala)        
+generate(asparagine, 3500, 2000, skala)        
+generate(threonine, 4500, 2000, skala)      
+generate(arginine, 5500, 2000, skala)
+generate(glutamic, 6500, 2000, skala)
+generate(isoleucine, 500, 4000, skala)
+generate(nethionine, 1500, 4000, skala)
+generate(aspartic, 2500, 4000, skala)
+generate(histidine, 3500, 4000, skala)
+generate(phenylanine, 4500, 4000, skala)
+generate(proline, 5500, 4000, skala)
+generate(tryptophan, 6500, 4000, skala)
+generate(tyrosine, 500, 6000, skala)
