@@ -13,8 +13,7 @@
         border: solid 1px black;
     }
 
-    text,
-    polygon {
+    text{
         fill: black;
     }
 
