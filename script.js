@@ -348,7 +348,7 @@ const core = {                                                                  
     h: 4,
     horizontalline: [2, 3],
     linetype: ["normal", "triangle-right"],
-    texts: ["O", "NO3",],
+    texts: ["O", "NH3",],
     textspos: [2, 3,]
 }
 const core2 = {                                                                     //do testów
@@ -362,7 +362,7 @@ const core2 = {                                                                 
 const serine = {
     name: "serine",
     h: 4,
-    texts: ["O", "NO3", "OH"],
+    texts: ["O", "NH3", "OH"],
     textspos: [2, 3, "DOWN"],
     horizontalline: [2, 3],
     linetype: ["normal", "triangle-right"],
@@ -370,7 +370,7 @@ const serine = {
 const seleconysteine = {
     name: "seleconysteine",
     h: 4,
-    texts: ["O", "NO3", "SE"],
+    texts: ["O", "NH3", "SE"],
     textspos: [2, 3, "DOWN"],
     horizontalline: [2, 3],
     linetype: ["normal", "triangle-right"],
@@ -378,7 +378,7 @@ const seleconysteine = {
 const cysteine = {
     name: "cysteine",
     h: 4,
-    texts: ["O", "NO3", "SH"],
+    texts: ["O", "NH3", "SH"],
     textspos: [2, 3, "DOWN"],
     horizontalline: [2, 3],
     linetype: ["normal", "triangle-right"],
@@ -386,7 +386,7 @@ const cysteine = {
 const glycine = {
     name: "glycine",
     h: 2,
-    texts: ["O", "NO3"],
+    texts: ["O", "NH3"],
     textspos: [2, 3],
     horizontalline: [2, 3],
     linetype: ["normal", "triangle-right"],
@@ -394,7 +394,7 @@ const glycine = {
 const alanine = {
     name: "alanine",
     h: 3,
-    texts: ["O", "NO3",],
+    texts: ["O", "NH3",],
     textspos: [2, 3,],
     horizontalline: [2, 3],
     linetype: ["normal", "triangle-right"],
@@ -402,7 +402,7 @@ const alanine = {
 const lysine = {
     name: "lysine",
     h: 7,
-    texts: ["O", "NO3", "H3N"],
+    texts: ["O", "NH3", "H3N"],
     textspos: [2, 3, "DOWN"],
     horizontalline: [2, 3],
     linetype: ["normal", "triangle-right"],
@@ -410,7 +410,7 @@ const lysine = {
 const valine = {
     name: "valine",
     h: 4,
-    texts: ["O", "NO3",],
+    texts: ["O", "NH3",],
     textspos: [2, 3],
     horizontalline: [2, 3],
     linetype: ["normal", "triangle-right"],
@@ -418,7 +418,7 @@ const valine = {
 const glutamine = {
     name: "glutamine",
     h: 6,
-    texts: ["O", "NO3", "NH2", "O"],
+    texts: ["O", "NH3", "NH2", "O"],
     textspos: [2, 3, "DOWN", 6],
     horizontalline: [2, 3, 6],
     linetype: ["normal", "triangle-right", "normal"],
@@ -426,7 +426,7 @@ const glutamine = {
 const leucine = {
     name: "leucine",
     h: 5,
-    texts: ["O", "NO3",],
+    texts: ["O", "NH3",],
     textspos: [2, 3,],
     horizontalline: [2, 3],
     linetype: ["normal", "triangle-right"],
@@ -434,7 +434,7 @@ const leucine = {
 const asparagine = {
     name: "asparagine",
     h: 5,
-    texts: ["O", "NO3", "H2N", "O"],
+    texts: ["O", "NH3", "H2N", "O"],
     textspos: [2, 3, "DOWN", 5],
     horizontalline: [2, 3, 5],
     linetype: ["normal", "triangle-right", "normal"],
@@ -442,7 +442,7 @@ const asparagine = {
 const threonine = {
     name: "threonine",
     h: 4,
-    texts: ["O", "NO3", "OH"],
+    texts: ["O", "NH3", "OH"],
     textspos: [2, 3, 4],
     horizontalline: [2, 3, 4],
     linetype: ["normal", "triangle-right", "normal"],
