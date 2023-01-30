@@ -1,0 +1,48 @@
+    html,
+    body {
+        margin: 0px;
+        padding: 0px;
+        background-color: gray;
+    }
+
+    line,
+    path {
+        stroke: black;
+    }
+
+    svg {
+        border: solid 1px black;
+        height:500px;
+        width:1500px;
+        background-color: lightgray;
+        display: block;
+    }
+    .svg {
+        border: solid 1px black;
+        height:500px;
+        width:1500px;
+        background-color: lightgray;
+    }
+    #svg {
+        border: solid 1px black;
+        height:500px;
+        width:1500px;
+        background-color: lightgray;
+    }
+
+    text{
+        fill: black;
+    }
+
+
+    #svg {
+        margin-top: 10px;
+        margin-left: 10px;;
+    }
+    rect{
+        fill:white;
+        
+    }
+    input{
+        width:1500px;
+    }
